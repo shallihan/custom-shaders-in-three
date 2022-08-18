@@ -103,9 +103,12 @@ const IndexPage = () => {
     renderer.render(scene, camera);
   };
 
+  let title;
+
   useEffect(() => {
     if (typeof document !== `undefined`) {
       const section = document.querySelector("section");
+      title = document.querySelector("header div");
 
       renderer.setClearColor(0xff0000, 0);
       renderer.setSize(section.clientWidth, section.clientHeight);
@@ -128,28 +131,30 @@ const IndexPage = () => {
 
   const handleNextArrowClick = (event) => {
     event.preventDefault();
-    if (typeof document !== `undefined`) {
-      const title = document.querySelector("header div");
-      current += 1;
-      aimRotationY -= arc;
-      if (current > cloths.length - 1) {
-        current = 0;
+    current += 1;
+    aimRotationY -= arc;
+    if (current > cloths.length - 1) {
+      current = 0;
+      if (title?.innerHTML) {
         title.innerHTML = cloths[0].title;
       }
+    }
+    if (title?.innerHTML) {
       title.innerHTML = cloths[current].title;
     }
   };
 
   const handlePreviousArrowClick = (event) => {
     event.preventDefault();
-    if (typeof document !== `undefined`) {
-      const title = document.querySelector("header div");
-      current -= 1;
-      aimRotationY += arc;
-      if (current < 0) {
-        current = cloths.length - 1;
+    current -= 1;
+    aimRotationY += arc;
+    if (current < 0) {
+      current = cloths.length - 1;
+      if (title?.innerHTML) {
         title.innerHTML = cloths[cloths.length - 1].title;
       }
+    }
+    if (title?.innerHTML) {
       title.innerHTML = cloths[current].title;
     }
   };
