@@ -106,27 +106,24 @@ const IndexPage = () => {
   let title;
 
   useEffect(() => {
-    if (typeof document !== `undefined`) {
-      const section = document.querySelector("section");
-      title = document.querySelector("header div");
+    const section = document.querySelector("section");
+    title = document.querySelector("header div");
 
-      renderer.setClearColor(0xff0000, 0);
+    renderer.setClearColor(0xff0000, 0);
+    renderer.setSize(section.clientWidth, section.clientHeight);
+    section.appendChild(renderer.domElement);
+
+    section.addEventListener("mousemove", (event) => {
+      mouse.x = (event.clientX / section.clientWidth) * 2 - 1;
+      mouse.y = (event.clientY / section.clientHeight) * -2 + 1;
+    });
+    
+    window.addEventListener("resize", () => {
+      camera.aspect = section.clientWidth / section.clientHeight;
+      camera.updateProjectionMatrix();
+
       renderer.setSize(section.clientWidth, section.clientHeight);
-      section.appendChild(renderer.domElement);
-
-      section.addEventListener("mousemove", (event) => {
-        mouse.x = (event.clientX / section.clientWidth) * 2 - 1;
-        mouse.y = (event.clientY / section.clientHeight) * -2 + 1;
-      });
-      if (window !== undefined) {
-        window.addEventListener("resize", () => {
-          camera.aspect = section.clientWidth / section.clientHeight;
-          camera.updateProjectionMatrix();
-
-          renderer.setSize(section.clientWidth, section.clientHeight);
-        });
-      }
-    }
+    });
   }, []);
 
   const handleNextArrowClick = (event) => {
