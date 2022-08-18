@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import * as THREE from "three";
 import styled from "styled-components";
+import { Canvas, useFrame } from "@react-three/fiber";
 import "../fonts/fonts.css";
 import GlobalStyles from "../styles";
 import { fragment, vertex } from "../shaders";
-import { Canvas, useFrame } from "@react-three/fiber";
 
 const cloths = [
   { title: "Print #1", src: "/image1.jpg", theme: "" },
@@ -33,7 +33,7 @@ const Model = ({ cloth, selectedClothFromCanvas, rotation }) => {
 
   const dpi = 50;
 
-  const endEntryPosition = new THREE.Vector3( 0, 0, 0 );
+  const endEntryPosition = new THREE.Vector3(0, 0, 0);
 
   useFrame((state) => {
     raycaster.setFromCamera(mouse, state.camera);
