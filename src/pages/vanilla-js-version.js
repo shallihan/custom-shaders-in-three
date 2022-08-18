@@ -16,12 +16,14 @@ const cloths = [
 const IndexPage = () => {
   const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(
-    50,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    1000
-  );
+  if (window !== undefined) {
+    const camera = new THREE.PerspectiveCamera(
+      50,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      1000
+    );
+  }
   const loader = new THREE.TextureLoader();
   const clock = new THREE.Clock();
   const raycaster = new THREE.Raycaster();
@@ -102,48 +104,54 @@ const IndexPage = () => {
   };
 
   useEffect(() => {
-    const section = document.querySelector("section");
+    if (document !== undefined) {
+      const section = document.querySelector("section");
 
-    renderer.setClearColor(0xff0000, 0);
-    renderer.setSize(section.clientWidth, section.clientHeight);
-    section.appendChild(renderer.domElement);
-
-    section.addEventListener("mousemove", (event) => {
-      mouse.x = (event.clientX / section.clientWidth) * 2 - 1;
-      mouse.y = (event.clientY / section.clientHeight) * -2 + 1;
-    });
-
-    window.addEventListener("resize", () => {
-      camera.aspect = section.clientWidth / section.clientHeight;
-      camera.updateProjectionMatrix();
-
+      renderer.setClearColor(0xff0000, 0);
       renderer.setSize(section.clientWidth, section.clientHeight);
-    });
+      section.appendChild(renderer.domElement);
 
+      section.addEventListener("mousemove", (event) => {
+        mouse.x = (event.clientX / section.clientWidth) * 2 - 1;
+        mouse.y = (event.clientY / section.clientHeight) * -2 + 1;
+      });
+      if (window !== undefined) {
+        window.addEventListener("resize", () => {
+          camera.aspect = section.clientWidth / section.clientHeight;
+          camera.updateProjectionMatrix();
+
+          renderer.setSize(section.clientWidth, section.clientHeight);
+        });
+      }
+    }
   }, []);
 
   const handleNextArrowClick = (event) => {
     event.preventDefault();
-    const title =  document.querySelector('header div');
-    current += 1;
-    aimRotationY -= arc;
-    if (current > cloths.length - 1) {
-      current = 0;
-      title.innerHTML = cloths[0].title
+    if (document !== undefined) {
+      const title = document.querySelector("header div");
+      current += 1;
+      aimRotationY -= arc;
+      if (current > cloths.length - 1) {
+        current = 0;
+        title.innerHTML = cloths[0].title;
+      }
+      title.innerHTML = cloths[current].title;
     }
-    title.innerHTML = cloths[current].title
   };
 
   const handlePreviousArrowClick = (event) => {
     event.preventDefault();
-    const title =  document.querySelector('header div');
-    current -= 1;
-    aimRotationY += arc;
-    if (current < 0) {
-      current = cloths.length - 1;
-      title.innerHTML = cloths[cloths.length - 1].title
+    if (document !== undefined) {
+      const title = document.querySelector("header div");
+      current -= 1;
+      aimRotationY += arc;
+      if (current < 0) {
+        current = cloths.length - 1;
+        title.innerHTML = cloths[cloths.length - 1].title;
+      }
+      title.innerHTML = cloths[current].title;
     }
-    title.innerHTML = cloths[current].title
   };
 
   animate();
