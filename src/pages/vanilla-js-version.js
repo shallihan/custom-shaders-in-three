@@ -104,7 +104,7 @@ const IndexPage = () => {
   };
 
   useEffect(() => {
-    if (document !== undefined) {
+    if (typeof document !== `undefined`) {
       const section = document.querySelector("section");
 
       renderer.setClearColor(0xff0000, 0);
@@ -128,7 +128,7 @@ const IndexPage = () => {
 
   const handleNextArrowClick = (event) => {
     event.preventDefault();
-    if (document !== undefined) {
+    if (typeof document !== `undefined`) {
       const title = document.querySelector("header div");
       current += 1;
       aimRotationY -= arc;
@@ -142,7 +142,7 @@ const IndexPage = () => {
 
   const handlePreviousArrowClick = (event) => {
     event.preventDefault();
-    if (document !== undefined) {
+    if (typeof document !== `undefined`) {
       const title = document.querySelector("header div");
       current -= 1;
       aimRotationY += arc;
